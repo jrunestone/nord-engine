@@ -1,0 +1,1 @@
+executable('game', 'src/main.cpp')
