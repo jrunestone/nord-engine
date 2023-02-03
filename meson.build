@@ -1,4 +1,6 @@
 project('nord', 'cpp')
 
-#subdir('engine')
+inc = include_directories('engine/src', 'game/src')
+
+subdir('engine')
 subdir('game')

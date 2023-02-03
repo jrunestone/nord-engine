@@ -1,0 +1,1 @@
+nordlib = library('nord', 'src/nord/System/Application.cpp', include_directories: inc)

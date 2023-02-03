@@ -1,1 +1,1 @@
-executable('game', 'src/main.cpp')
+executable('game', 'src/game/main.cpp', include_directories: inc, link_with: nordlib)
