@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Arch" Version="1.2.7" />
+    <PackageReference Include="Arch.Relationships" Version="1.0.1" />
+    <PackageReference Include="Arch.System" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
+    <PackageReference Include="SFML.Net" Version="2.5.1" />
+    <PackageReference Include="Stashbox" Version="5.13.0" />
+    <PackageReference Include="Stashbox.Extensions.Hosting" Version="5.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Ecs\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{9F1D250B-3D06-4A78-8D80-BED8BCD928A7}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nord.Engine", "src\Nord.Engine\Nord.Engine.csproj", "{35680BC0-00BC-493F-B8A4-A2E6F214714E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nord.Samples", "src\Nord.Samples\Nord.Samples.csproj", "{D6356F1E-D658-466B-99C5-84A3E7DB5B9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35680BC0-00BC-493F-B8A4-A2E6F214714E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35680BC0-00BC-493F-B8A4-A2E6F214714E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35680BC0-00BC-493F-B8A4-A2E6F214714E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35680BC0-00BC-493F-B8A4-A2E6F214714E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6356F1E-D658-466B-99C5-84A3E7DB5B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6356F1E-D658-466B-99C5-84A3E7DB5B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6356F1E-D658-466B-99C5-84A3E7DB5B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6356F1E-D658-466B-99C5-84A3E7DB5B9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
