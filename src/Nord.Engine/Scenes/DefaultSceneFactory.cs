@@ -1,26 +1,26 @@
-using System.Reflection;
 using Stashbox;
 
 namespace Nord.Engine.Scenes;
 
-public class DefaultSceneFactory(IStashboxContainer _container) : ISceneFactory
+public class DefaultSceneFactory(IStashboxContainer container) : ISceneFactory
 {
+    private readonly IStashboxContainer _container = container;
+
     public TScene Build<TScene>() where TScene : IScene
     {
         var sceneContainer = _container.GetChildContainer(typeof(TScene)) ??
                              _container.CreateChildContainer(typeof(TScene));
-        
-        sceneContainer.ComposeBy(FindSceneCompositionRoot<TScene>());
+
+        var compositionRoot = _container.Resolve<ISceneCompositionRoot<TScene>>();
+        sceneContainer.ComposeBy(compositionRoot);
         return sceneContainer.Resolve<TScene>();
     }
 
-    private Type FindSceneCompositionRoot<TScene>() where TScene : IScene
+    public void Destroy<TScene>(TScene scene) where TScene : IScene
     {
-        return AppDomain.CurrentDomain
-            .GetAssemblies()
-            .SelectMany(x => x.GetTypes())
-            .First(x => 
-                x.GetInterfaces().Contains(typeof(ISceneCompositionRoot<TScene>)) && 
-                x.IsClass);
+        var sceneContainer = _container.GetChildContainer(typeof(TScene));
+
+        scene.Dispose();
+        sceneContainer?.Dispose();
     }
 }

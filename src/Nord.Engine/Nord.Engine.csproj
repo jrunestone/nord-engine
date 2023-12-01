@@ -22,8 +22,4 @@
     <PackageReference Include="Stashbox.Extensions.Hosting" Version="5.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Ecs\" />
-  </ItemGroup>
-
 </Project>

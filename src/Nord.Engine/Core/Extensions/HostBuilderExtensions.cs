@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Nord.Engine.Core.Configuration;
 using Nord.Engine.Scenes;
 using Serilog;
+using SFML.System;
 using Stashbox;
 
 namespace Nord.Engine.Core.Extensions;
@@ -29,6 +30,7 @@ public static class HostBuilderExtensions
             })
             .ConfigureServices((context, services) =>
             {
+                // options
                 services.Configure<EngineOptions>(context.Configuration.GetSection(EngineOptions.SectionName));
 
                 services.AddSingleton<EngineOptions>(_ =>
@@ -40,9 +42,14 @@ public static class HostBuilderExtensions
                     return opts;
                 });
 
+                // scenes
                 services.AddSingleton<ISceneFactory, DefaultSceneFactory>(_ => new DefaultSceneFactory(container));
                 services.AddSingleton<ISceneService, DefaultSceneService>();
+                
+                // time
+                services.AddSingleton<Clock>(_ => new Clock());
 
+                // main application
                 services.AddScoped<IApplication, TApplication>();
             })
             .UseSerilog((hostingContext, services, loggerConfiguration) =>
@@ -56,7 +63,7 @@ public static class HostBuilderExtensions
     public static IHostBuilder AddScenes(this IHostBuilder hostBuilder)
     {
         var container = hostBuilder.GetRootContainer();
-        container.RegisterImplementations<IScene>(Assembly.GetCallingAssembly());
+        container.RegisterOpenGenericImplementations(Assembly.GetCallingAssembly(), typeof(ISceneCompositionRoot<>));
         return hostBuilder;
     }
     

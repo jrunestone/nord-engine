@@ -1,17 +1,22 @@
+using Arch.Core;
 using Microsoft.Extensions.Logging;
+using Nord.Engine.Ecs;
 using Nord.Engine.Scenes;
+using Nord.Samples.HelloWorld.Components;
 
 namespace Nord.Samples.HelloWorld.Scenes;
 
-public class MainScene(TestDependency _testDependency, ILogger<MainScene> _logger) : IScene
+public class MainScene(
+    World world, 
+    IEnumerable<ISystem> systems,
+    ILogger<MainScene> logger) : SceneBase(world, systems)
 {
-    public void Create()
-    {
-        _logger.LogInformation("MainScene::Create(), {Test}", _testDependency.SomeValue);
-    }
+    private readonly ILogger<MainScene> _logger = logger;
 
-    public void Dispose()
+    public override void Create()
     {
-        _logger.LogInformation("MainScene::Dispose()");
+        base.Create();
+        _logger.LogInformation("MainScene::Create()");
+        World.Create(new Position { X = 100, Y = 100 });
     }
 }
