@@ -1,4 +1,4 @@
-using Arch.Core;
+using Nord.Engine.Core.Extensions;
 using Nord.Engine.Ecs;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Systems;
@@ -10,11 +10,12 @@ public class MainSceneCompositionRoot : ISceneCompositionRoot<MainScene>
 {
     public void Compose(IStashboxContainer container)
     {
-        // entity context
-        container.RegisterInstance<World>(World.Create(), finalizerDelegate: World.Destroy);
+        container
+            .AddEntityContext()
+            .AddDefaultSystems();
         
         // systems
-        container.Register<ISystem, MovementSystem>();
+        container.RegisterSingleton<ISystem, MovementSystem>();
         
         // scene
         container.Register<MainScene>();

@@ -1,7 +1,7 @@
 using Arch.Core;
 using Microsoft.Extensions.Logging;
 using Nord.Engine.Ecs;
-using Nord.Samples.HelloWorld.Components;
+using Nord.Engine.Ecs.Components;
 
 namespace Nord.Samples.HelloWorld.Systems;
 
@@ -10,11 +10,11 @@ public class MovementSystem(World world, ILogger<MovementSystem> logger) : Syste
     private readonly ILogger<MovementSystem> _logger = logger;
 
     private readonly QueryDescription _desc = new QueryDescription()
-        .WithAll<Position>();
+        .WithAll<PositionComponent>();
 
     public override void Update(float dt)
     {
-        World.Query(in _desc, (ref Position position) =>
+        World.Query(in _desc, (ref PositionComponent position) =>
         {
             position.X += dt;
 

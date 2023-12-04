@@ -3,8 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nord.Engine.Core.Configuration;
+using Nord.Engine.Ecs;
+using Nord.Engine.Ecs.Systems;
 using Nord.Engine.Scenes;
 using Serilog;
+using SFML.Graphics;
 using SFML.System;
 using Stashbox;
 
@@ -18,7 +21,10 @@ public static class HostBuilderExtensions
         where TApplication : class, IApplication
     {
         var container = new StashboxContainer(cfg =>
-            cfg.WithReBuildSingletonsInChildContainer());
+            {
+                // this creates new singletons in child containers = not same instance anymore
+                // cfg.WithReBuildSingletonsInChildContainer() 
+            });
 
         hostBuilder.Properties[nameof(StashboxContainer)] = container;
         
@@ -41,13 +47,15 @@ public static class HostBuilderExtensions
                     // TODO: validate options object
                     return opts;
                 });
+                
+                // core
+                services.AddSingleton<Clock>(_ => new Clock());
+                services.AddSingleton<ITextureCache, DefaultTextureCache>();
+                services.AddSingleton<MainRenderTarget>();
 
                 // scenes
                 services.AddSingleton<ISceneFactory, DefaultSceneFactory>(_ => new DefaultSceneFactory(container));
                 services.AddSingleton<ISceneService, DefaultSceneService>();
-                
-                // time
-                services.AddSingleton<Clock>(_ => new Clock());
 
                 // main application
                 services.AddScoped<IApplication, TApplication>();

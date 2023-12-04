@@ -1,10 +1,25 @@
 using System.Reflection;
+using Arch.Core;
+using Nord.Engine.Ecs;
+using Nord.Engine.Ecs.Systems;
 using Stashbox;
 
 namespace Nord.Engine.Core.Extensions;
 
 public static class StashboxContainerExtensions
 {
+    public static IStashboxContainer AddDefaultSystems(this IStashboxContainer container)
+    {
+        container.Register<ISystem, DefaultRenderSystem>();
+        return container;
+    }
+     
+    public static IStashboxContainer AddEntityContext(this IStashboxContainer container)
+    {
+        container.RegisterInstance<World>(World.Create(), finalizerDelegate: World.Destroy);
+        return container;
+    }
+    
     public static void RegisterOpenGenericImplementations(
         this IStashboxContainer container, 
         Assembly assembly, 

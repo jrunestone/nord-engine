@@ -7,9 +7,10 @@ using SFML.System;
 namespace Nord.Samples.HelloWorld;
 
 public class HelloWorldApplication(
-    ISceneService sceneService, 
+    EngineOptions options,
     Clock clock,
-    EngineOptions options) : DefaultApplication(sceneService, clock, options)
+    MainRenderTarget mainRenderTarget,
+    ISceneService sceneService) : DefaultApplication(options, clock, mainRenderTarget, sceneService)
 {
     private readonly ISceneService _sceneService = sceneService;
     
