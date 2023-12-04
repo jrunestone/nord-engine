@@ -22,6 +22,6 @@ public class MainScene(
         _logger.LogInformation("MainScene::Create()");
         
         World.Create(
-            new SpriteComponent(_textureCache.GetTexture("/home/jr/src/nord-engine/src/Nord.Samples/assets/spritesheet1.png")));
+            new SpriteComponent(_textureCache.GetTexture("spritesheet1.png")));
     }
 }

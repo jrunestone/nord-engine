@@ -37,16 +37,7 @@ public static class HostBuilderExtensions
             .ConfigureServices((context, services) =>
             {
                 // options
-                services.Configure<EngineOptions>(context.Configuration.GetSection(EngineOptions.SectionName));
-
-                services.AddSingleton<EngineOptions>(_ =>
-                {
-                    var opts = new EngineOptions();
-                    context.Configuration.GetSection(EngineOptions.SectionName).Bind(opts);
-                    engineConfiguration?.Invoke(opts);
-                    // TODO: validate options object
-                    return opts;
-                });
+                AddOptions(context, services, engineConfiguration);
                 
                 // core
                 services.AddSingleton<Clock>(_ => new Clock());
@@ -75,13 +66,6 @@ public static class HostBuilderExtensions
         return hostBuilder;
     }
     
-    public static void RunApplication(this IHost host)
-    {
-        var scope = host.Services.CreateScope();
-        var app = scope.ServiceProvider.GetRequiredService<IApplication>();
-        app.Run();
-    }
-    
     public static IStashboxContainer GetRootContainer(this IHostBuilder hostBuilder)
     {
         return hostBuilder.Properties[nameof(StashboxContainer)] as IStashboxContainer ??
@@ -92,5 +76,34 @@ public static class HostBuilderExtensions
     {
         return hostBuilderContext.Properties[nameof(StashboxContainer)] as IStashboxContainer ??
                throw new InvalidOperationException("Root container hasn't been registered yet");
+    }
+    
+    public static void RunApplication(this IHost host)
+    {
+        var scope = host.Services.CreateScope();
+        var app = scope.ServiceProvider.GetRequiredService<IApplication>();
+        app.Run();
+    }
+    
+    private static IServiceCollection AddOptions(
+        HostBuilderContext context, 
+        IServiceCollection services,
+        Action<EngineOptions>? engineConfiguration = null)
+    {
+        services.Configure<EngineOptions>(context.Configuration.GetSection(EngineOptions.SectionName));
+
+        services.AddSingleton<EngineOptions>(_ =>
+        {
+            var opts = new EngineOptions();
+            context.Configuration.GetSection(EngineOptions.SectionName).Bind(opts);
+            engineConfiguration?.Invoke(opts);
+
+            // set dynamic options
+            opts.AssetRootPath = Path.Combine(context.HostingEnvironment.ContentRootPath, opts.AssetRootPath ?? string.Empty);
+            
+            return opts;
+        });
+
+        return services;
     }
 }
