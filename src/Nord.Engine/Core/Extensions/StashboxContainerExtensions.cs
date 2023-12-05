@@ -11,6 +11,8 @@ public static class StashboxContainerExtensions
     public static IStashboxContainer AddDefaultSystems(this IStashboxContainer container)
     {
         container.Register<ISystem, DefaultRenderSystem>();
+        container.Register<ISystem, DefaultTextRenderSystem>();
+        
         return container;
     }
      

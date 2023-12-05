@@ -4,20 +4,19 @@ using Nord.Engine.Ecs.Components;
 
 namespace Nord.Engine.Ecs.Systems;
 
-public class DefaultRenderSystem(
+public class DefaultTextRenderSystem(
     World world,
     MainRenderTarget renderTarget) : SystemBase(world)
 {
     private readonly MainRenderTarget _renderTarget = renderTarget;
     private readonly QueryDescription _query = new QueryDescription()
-        .WithAll<SpriteComponent>();
+        .WithAll<TextComponent>();
     
     public override void Update(float dt)
     {
-        World.Query(in _query, (ref SpriteComponent sprite) =>
+        World.Query(in _query, (ref TextComponent text) =>
         {
-            _renderTarget.RenderTexture?.Draw(sprite.Sprite);
-
+            _renderTarget.RenderTexture?.Draw(text.Text);
         });
     }
 }

@@ -1,6 +1,6 @@
 using SFML.Graphics;
 
-namespace Nord.Engine.Core;
+namespace Nord.Engine.Core.Assets;
 
 public interface ITextureCache
 {

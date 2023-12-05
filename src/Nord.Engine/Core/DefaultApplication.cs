@@ -32,10 +32,9 @@ public class DefaultApplication(
             // window.Clear(new Color(46, 52, 64));
 
             
-            _mainRenderTarget.RenderTarget!.Clear(new Color(46, 52, 64));
+            _mainRenderTarget.RenderTexture!.Clear(new Color(46, 52, 64));
             _sceneService.CurrentScene?.Update(time.AsSeconds());
-            _mainRenderTarget.RenderTarget!.Draw(new CircleShape(100f) { FillColor = new Color(67, 76, 94) });
-            _mainRenderTarget.RenderTarget!.Display();
+            _mainRenderTarget.RenderTexture!.Display();
             
             window.Draw(_mainRenderTarget.Sprite);
             window.Display();

@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Nord.Engine.Core.Assets;
 using Nord.Engine.Core.Configuration;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Systems;
@@ -42,6 +43,7 @@ public static class HostBuilderExtensions
                 // core
                 services.AddSingleton<Clock>(_ => new Clock());
                 services.AddSingleton<ITextureCache, DefaultTextureCache>();
+                services.AddSingleton<IFontCache, DefaultFontCache>();
                 services.AddSingleton<MainRenderTarget>();
 
                 // scenes
