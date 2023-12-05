@@ -101,7 +101,7 @@ public static class HostBuilderExtensions
             engineConfiguration?.Invoke(opts);
 
             // set dynamic options
-            opts.AssetRootPath = Path.Combine(context.HostingEnvironment.ContentRootPath, opts.AssetRootPath ?? string.Empty);
+            opts.AssetRootPath = Path.Combine(context.HostingEnvironment.ContentRootPath, opts.AssetRootPath);
             
             return opts;
         });

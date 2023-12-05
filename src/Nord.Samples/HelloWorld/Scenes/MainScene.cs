@@ -29,6 +29,6 @@ public class MainScene(
             new SpriteComponent(_textureCache.GetTexture("spritesheet.png"), new Vector2f(10, 200), new IntRect(150, 20, 32, 100)));
 
         World.Create(
-            new TextComponent("Debug text", _fontCache.GetFont("PixelifySans-VariableFont_wght.ttf"), new Vector2f(10, 10)));
+            new TextComponent("Debug text", _fontCache.DefaultFont, new Vector2f(10, 10)));
     }
 }

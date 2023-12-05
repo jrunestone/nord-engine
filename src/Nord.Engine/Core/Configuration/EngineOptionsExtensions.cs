@@ -6,7 +6,7 @@ public static class EngineOptionsExtensions
 {
     public static VideoMode GetVideoMode(this EngineOptions options)
     {
-        var resolution = options.Resolution!
+        var resolution = options.Resolution
             .ToLowerInvariant()
             .Trim()
             .Split("x")

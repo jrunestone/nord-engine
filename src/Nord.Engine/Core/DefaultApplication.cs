@@ -30,7 +30,6 @@ public class DefaultApplication(
             
             window.DispatchEvents();
             // window.Clear(new Color(46, 52, 64));
-
             
             _mainRenderTarget.RenderTexture!.Clear(new Color(46, 52, 64));
             _sceneService.CurrentScene?.Update(time.AsSeconds());

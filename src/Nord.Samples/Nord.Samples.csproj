@@ -23,9 +23,6 @@
     <None Update="assets\spritesheet1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="assets\PixelifySans-VariableFont_wght.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="assets\spritesheet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

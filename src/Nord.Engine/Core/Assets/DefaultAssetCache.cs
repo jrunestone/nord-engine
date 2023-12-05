@@ -17,7 +17,7 @@ public class DefaultAssetCache<T>(EngineOptions options)
             return asset;
         }
         
-        asset = activateAsset(Path.Combine(_options.AssetRootPath!, filename));
+        asset = activateAsset(Path.Combine(_options.AssetRootPath, filename));
         _cache.Add(key, asset);
 
         return asset;

@@ -22,4 +22,10 @@
     <PackageReference Include="Stashbox.Extensions.Hosting" Version="5.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="assets\fonts\PixelifySans-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

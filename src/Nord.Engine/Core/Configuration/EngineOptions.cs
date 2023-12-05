@@ -4,8 +4,10 @@ public class EngineOptions
 {
     public const string SectionName = "Nord";
     
-    public string? Name { get; set; } = "nord";
-    public string? Resolution { get; set; } = "1024x768";
+    public string Name { get; set; } = "nord";
+    public string Resolution { get; set; } = "1024x768";
     public bool Windowed { get; set; } = true;
-    public string? AssetRootPath { get; set; } = "assets";
+    
+    public string AssetRootPath { get; set; } = "assets";
+    public string DefaultFontName { get; set; } = "fonts/PixelifySans-VariableFont_wght.ttf";
 }
