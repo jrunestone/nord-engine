@@ -26,7 +26,62 @@ public class MainScene(
         _logger.LogInformation("MainScene::Create()");
         
         World.Create(
-            new SpriteComponent(_textureCache.GetTexture("spritesheet.png"), new Vector2f(10, 200), new IntRect(150, 20, 32, 100)));
+            new SpriteComponent(_textureCache.GetTexture("spritesheet.png"), new Vector2f(10, 200), new IntRect(150, 20, 32, 100)),
+            new AnimationComponent
+            {
+                Animations = new()
+                {
+                    new ()
+                    {
+                        Name = "Idle",
+                        
+                        Frames = new()
+                        {
+                            new()
+                            {
+                                Coords = new IntRect(153, 32, 32, 73), 
+                                Delay = 0.2f
+                            },
+                            
+                            new()
+                            {
+                                Coords = new IntRect(255, 32, 32, 73), 
+                                Delay = 0.2f
+                            },
+                            
+                            new()
+                            {
+                                Coords = new IntRect(358, 32, 32, 73), 
+                                Delay = 0.2f
+                            },
+                            
+                            new()
+                            {
+                                Coords = new IntRect(460, 32, 32, 73), 
+                                Delay = 0.2f
+                            },
+                            
+                            new()
+                            {
+                                Coords = new IntRect(562, 32, 32, 73), 
+                                Delay = 0.2f
+                            },
+                            
+                            new()
+                            {
+                                Coords = new IntRect(664, 32, 32, 73), 
+                                Delay = 0.2f
+                            },
+                            
+                            new()
+                            {
+                                Coords = new IntRect(766, 32, 32, 73), 
+                                Delay = 0.2f
+                            }
+                        }
+                    }
+                }
+            });
 
         World.Create(
             new TextComponent("Debug text", _fontCache.DefaultFont, new Vector2f(10, 10)));

@@ -10,6 +10,7 @@ public static class StashboxContainerExtensions
 {
     public static IStashboxContainer AddDefaultSystems(this IStashboxContainer container)
     {
+        container.Register<ISystem, DefaultAnimationSystem>();
         container.Register<ISystem, DefaultRenderSystem>();
         container.Register<ISystem, DefaultTextRenderSystem>();
         
