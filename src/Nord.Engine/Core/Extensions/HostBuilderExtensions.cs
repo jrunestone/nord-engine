@@ -39,6 +39,8 @@ public static class HostBuilderExtensions
             {
                 // options
                 AddOptions(context, services, engineConfiguration);
+
+                services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<DefaultApplication>());
                 
                 // core
                 services.AddSingleton<Clock>(_ => new Clock());

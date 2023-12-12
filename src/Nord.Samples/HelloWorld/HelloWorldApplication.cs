@@ -1,3 +1,4 @@
+using MediatR;
 using Nord.Engine.Core;
 using Nord.Engine.Core.Configuration;
 using Nord.Engine.Scenes;
@@ -6,17 +7,24 @@ using SFML.System;
 
 namespace Nord.Samples.HelloWorld;
 
-public class HelloWorldApplication(
-    EngineOptions options,
-    Clock clock,
-    MainRenderTarget mainRenderTarget,
-    ISceneService sceneService) : DefaultApplication(options, clock, mainRenderTarget, sceneService)
+public class HelloWorldApplication : DefaultApplication
 {
-    private readonly ISceneService _sceneService = sceneService;
+    private readonly IMediator _mediator;
+
+    public HelloWorldApplication(
+        EngineOptions options,
+        Clock clock,
+        MainRenderTarget mainRenderTarget,
+        IMediator mediator,
+        ISceneService sceneService) 
+        : base(options, clock, mainRenderTarget, sceneService)
+    {
+        _mediator = mediator;
+    }
     
     public override void Run()
     {
-        _sceneService.Push<MainScene>();
+        _mediator.Send(new ChangeSceneRequest<MainScene>());
         base.Run();
     }
 }

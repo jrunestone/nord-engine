@@ -9,8 +9,17 @@ public class DefaultSceneService(ISceneFactory sceneFactory) : ISceneService
 
     public TScene Push<TScene>() where TScene : IScene
     {
-        var scene = _sceneFactory.Build<TScene>();
+        return (TScene)Push(typeof(TScene));
+    }
 
+    public IScene Push(Type sceneType)
+    {
+        if (!typeof(IScene).IsAssignableFrom(sceneType))
+        {
+            throw new ArgumentException($"Provided type is not of type {nameof(IScene)}");
+        }
+
+        var scene = _sceneFactory.Build(sceneType);
         scene.Create();
         _scenes.Push(scene);
         
