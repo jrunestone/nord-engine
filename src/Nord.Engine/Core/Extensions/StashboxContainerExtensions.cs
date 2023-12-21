@@ -1,18 +1,38 @@
 using System.Reflection;
 using Arch.Core;
+using Nord.Engine.Core.Bus;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Systems;
+using Nord.Engine.Input;
 using Stashbox;
 
 namespace Nord.Engine.Core.Extensions;
 
 public static class StashboxContainerExtensions
 {
-    public static IStashboxContainer AddDefaultSystems(this IStashboxContainer container)
+    public static IStashboxContainer AddCore(this IStashboxContainer container)
     {
-        container.Register<ISystem, DefaultAnimationSystem>();
-        container.Register<ISystem, DefaultRenderSystem>();
-        container.Register<ISystem, DefaultTextRenderSystem>();
+        // scene-scoped bus
+        container.RegisterSingleton<IBus, DefaultBus>();
+        container.RegisterInstance<ICommandHandlerFactory>(new DefaultCommandHandlerFactory(container));
+        container.RegisterOpenGenericImplementations(Assembly.GetExecutingAssembly(), typeof(ICommandHandler<>));
+        
+        return container;
+    }
+    
+    public static IStashboxContainer AddRendering(this IStashboxContainer container)
+    {
+        container.RegisterSingleton<ISystem, DefaultAnimationSystem>();
+        container.RegisterSingleton<ISystem, DefaultRenderSystem>();
+        container.RegisterSingleton<ISystem, DefaultTextRenderSystem>();
+        
+        return container;
+    }
+    
+    public static IStashboxContainer AddInput(this IStashboxContainer container)
+    {
+        container.RegisterSingleton<IInputActionMapService, DefaultInputActionMapService>();
+        container.RegisterSingleton<IProcess, DefaultInputProcess>();
         
         return container;
     }

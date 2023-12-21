@@ -1,25 +1,40 @@
 using Arch.Core;
 using Microsoft.Extensions.Logging;
+using Nord.Engine.Core;
 using Nord.Engine.Core.Assets;
+using Nord.Engine.Core.Bus;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Components;
+using Nord.Engine.Input;
 using Nord.Engine.Scenes;
+using Nord.Samples.HelloWorld.Input;
 using SFML.Graphics;
 using SFML.System;
 
 namespace Nord.Samples.HelloWorld.Scenes;
 
-public class MainScene(
-    World world, 
-    IEnumerable<ISystem> systems,
-    ITextureCache textureCache,
-    IFontCache fontCache,
-    ILogger<MainScene> logger) : SceneBase(world, systems)
+public class MainScene : SceneBase
 {
-    private readonly ITextureCache _textureCache = textureCache;
-    private readonly IFontCache _fontCache = fontCache;
-    private readonly ILogger<MainScene> _logger = logger;
+    private readonly ITextureCache _textureCache;
+    private readonly IFontCache _fontCache;
+    private readonly IBus _bus;
+    private readonly ILogger<MainScene> _logger;
 
+    public MainScene(
+        World world, 
+        IEnumerable<ISystem> systems,
+        IEnumerable<IProcess> processes,
+        ITextureCache textureCache,
+        IFontCache fontCache,
+        IBus bus,
+        ILogger<MainScene> logger) : base(world, systems, processes)
+    {
+        _textureCache = textureCache;
+        _fontCache = fontCache;
+        _bus = bus;
+        _logger = logger;
+    }
+    
     public override void Create()
     {
         base.Create();
@@ -85,5 +100,7 @@ public class MainScene(
 
         World.Create(
             new TextComponent("Debug text", _fontCache.DefaultFont, new Vector2f(10, 10)));
+        
+        _bus.Send<ChangeInputActionMapCommand<DefaultInputActionMap>>();
     }
 }

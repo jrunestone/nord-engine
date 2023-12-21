@@ -2,10 +2,15 @@ using Stashbox;
 
 namespace Nord.Engine.Scenes;
 
-public class DefaultSceneFactory(IStashboxContainer container) : ISceneFactory
+public class DefaultSceneFactory : ISceneFactory
 {
-    private readonly IStashboxContainer _container = container;
+    private readonly IStashboxContainer _container;
 
+    public DefaultSceneFactory(IStashboxContainer container)
+    {
+        _container = container;
+    }
+    
     public TScene Build<TScene>() where TScene : IScene
     {
         return (TScene)Build(typeof(TScene));

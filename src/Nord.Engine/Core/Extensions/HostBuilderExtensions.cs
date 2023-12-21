@@ -3,12 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Nord.Engine.Core.Assets;
+using Nord.Engine.Core.Bus;
 using Nord.Engine.Core.Configuration;
-using Nord.Engine.Ecs;
-using Nord.Engine.Ecs.Systems;
+using Nord.Engine.Input;
 using Nord.Engine.Scenes;
 using Serilog;
-using SFML.Graphics;
 using SFML.System;
 using Stashbox;
 
@@ -21,12 +20,7 @@ public static class HostBuilderExtensions
         Action<EngineOptions>? engineConfiguration = null) 
         where TApplication : class, IApplication
     {
-        var container = new StashboxContainer(cfg =>
-            {
-                // this creates new singletons in child containers = not same instance anymore
-                // cfg.WithReBuildSingletonsInChildContainer() 
-            });
-
+        var container = new StashboxContainer();
         hostBuilder.Properties[nameof(StashboxContainer)] = container;
         
         return hostBuilder
@@ -40,14 +34,17 @@ public static class HostBuilderExtensions
                 // options
                 AddOptions(context, services, engineConfiguration);
 
-                services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<DefaultApplication>());
-                
                 // core
                 services.AddSingleton<Clock>(_ => new Clock());
+                services.AddSingleton<MainRenderTarget>();
                 services.AddSingleton<ITextureCache, DefaultTextureCache>();
                 services.AddSingleton<IFontCache, DefaultFontCache>();
-                services.AddSingleton<MainRenderTarget>();
-
+                
+                // bus, commands, events
+                services.AddSingleton<IGlobalBus, DefaultBus>();
+                services.AddSingleton<ICommandHandlerFactory, DefaultCommandHandlerFactory>(_ => new DefaultCommandHandlerFactory(container));
+                container.RegisterOpenGenericImplementations(Assembly.GetExecutingAssembly(), typeof(ICommandHandler<>));
+                
                 // scenes
                 services.AddSingleton<ISceneFactory, DefaultSceneFactory>(_ => new DefaultSceneFactory(container));
                 services.AddSingleton<ISceneService, DefaultSceneService>();
