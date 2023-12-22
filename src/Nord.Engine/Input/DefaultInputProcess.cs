@@ -1,3 +1,4 @@
+using System.Reflection;
 using Nord.Engine.Core;
 using Nord.Engine.Core.Bus;
 
@@ -23,10 +24,24 @@ public class DefaultInputProcess : IProcess
 
         foreach (var (inputAction, inputDeviceTrigger) in _inputActionMapService.CurrentActionMap.InputActions)
         {
-            if (inputDeviceTrigger.IsActive())
+            inputDeviceTrigger.Update();
+            
+            if (inputDeviceTrigger.IsActivated)
             {
-                _bus.Publish(inputAction);
+                // released
+                _bus.Publish(CreateInputEvent<InputActionActivated<IInputAction>>(inputAction));
+            }
+            else if (inputDeviceTrigger.IsActive)
+            {
+                // pressed/down
+                _bus.Publish(CreateInputEvent<InputActionActive<IInputAction>>(inputAction));
             }
         }
     }
+
+    private object CreateInputEvent<T>(IInputAction inputAction) where T : IInputActionEvent
+    {
+        return Activator.CreateInstance(typeof(T), BindingFlags.CreateInstance, null, new[] { inputAction }) ?? 
+               throw new ArgumentException("Invalid event type");
+    } 
 }

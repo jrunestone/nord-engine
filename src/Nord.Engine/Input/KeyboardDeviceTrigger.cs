@@ -4,15 +4,24 @@ namespace Nord.Engine.Input;
 
 public class KeyboardDeviceTrigger : IInputDeviceTrigger
 {
+    public bool IsActive { get; private set; }
+    public bool IsActivated { get; private set; }
     public Keyboard.Key Key { get; }
 
+    private bool _isPressed;
+    
     public KeyboardDeviceTrigger(Keyboard.Key key)
     {
         Key = key;
     }
     
-    public bool IsActive()
+    public void Update()
     {
-        return Keyboard.IsKeyPressed(Key);
+        var isPressed = Keyboard.IsKeyPressed(Key);
+
+        IsActivated = _isPressed && !isPressed;
+        IsActive = isPressed;
+
+        _isPressed = isPressed;
     }
 }

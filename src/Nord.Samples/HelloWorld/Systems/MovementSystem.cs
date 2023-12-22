@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Nord.Engine.Core.Bus;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Components;
+using Nord.Engine.Input;
 using Nord.Samples.HelloWorld.Input;
 
 namespace Nord.Samples.HelloWorld.Systems;
@@ -23,7 +24,7 @@ public class MovementSystem : SystemBase
     {
         _logger = logger;
         
-        bus.Subscribe<RightInputAction>(HandleInput);
+        bus.Subscribe<InputActionActivated<RightInputAction>>(HandleInput);
         //bus.Subscribe<InputActionHappening<MoveForwardAction>>HandleInput)
         //bus.Subscribe<InputActionHappened<JumpAction>>HandleInput)
         //bus.SubscribeToInputAction<JumpAction>(isHappening: true, HandleInput)
@@ -42,8 +43,8 @@ public class MovementSystem : SystemBase
         // }); 
     }
 
-    public void HandleInput(RightInputAction key)
+    public void HandleInput(InputActionActivated<RightInputAction> @event)
     {
-        _logger.LogInformation("Key pressed: {Key}", key.ToString());
+        _logger.LogInformation("Event: {Event}, action: {Action})", @event.ToString(), @event.InputAction.ToString());
     }
 }
