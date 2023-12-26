@@ -1,10 +1,10 @@
 namespace Nord.Engine.Input;
 
-public class InputActionActivated<T> : IInputActionEvent where T : IInputAction
+public class InputActionActivated<T> : IInputActionEvent<T> where T : IInputAction
 {
-    public IInputAction InputAction { get; }
+    public T InputAction { get; }
 
-    public InputActionActivated(IInputAction inputAction)
+    public InputActionActivated(T inputAction)
     {
         InputAction = inputAction;
     }

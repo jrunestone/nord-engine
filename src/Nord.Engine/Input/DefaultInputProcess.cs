@@ -29,19 +29,29 @@ public class DefaultInputProcess : IProcess
             if (inputDeviceTrigger.IsActivated)
             {
                 // released
-                _bus.Publish(CreateInputEvent<InputActionActivated<IInputAction>>(inputAction));
+                _bus.Publish(CreateInputEvent(typeof(InputActionActivated<>), inputAction));
             }
             else if (inputDeviceTrigger.IsActive)
             {
                 // pressed/down
-                _bus.Publish(CreateInputEvent<InputActionActive<IInputAction>>(inputAction));
+                _bus.Publish(CreateInputEvent(typeof(InputActionActive<>), inputAction));
             }
         }
     }
 
-    private object CreateInputEvent<T>(IInputAction inputAction) where T : IInputActionEvent
+    private object CreateInputEvent<T>(Type baseEventType, T inputAction) where T : IInputAction
     {
-        return Activator.CreateInstance(typeof(T), BindingFlags.CreateInstance, null, new[] { inputAction }) ?? 
+        var actionType = inputAction.GetType();
+        
+        if (!typeof(IInputActionEvent).IsAssignableFrom(baseEventType) ||
+            !baseEventType.IsGenericType)
+        {
+            throw new ArgumentException("Invalid event type");
+        }
+        
+        var eventType = baseEventType.MakeGenericType(actionType);
+        
+        return Activator.CreateInstance(eventType, inputAction) ?? 
                throw new ArgumentException("Invalid event type");
     } 
 }
