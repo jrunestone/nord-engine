@@ -7,8 +7,9 @@
   * Application object pushes a scene
     * Scene service uses scene factory to get the scene child container and composes the root, resolving the scene
       * Default application base runs event loop
+        * Updates global processes 
         * Updates the current scene
-          * The current scene updates its world/systems
+          * The current scene updates its world/systems/processes
         * When a scene is popped, it is disposed
 
 # DI
@@ -17,4 +18,22 @@ Contains global bus, global processes, resource caches
 
 ## Scene container (child container) 
 Contains scoped bus, scoped processes, scoped input maps, scoped systems etc
-Can request a global bus
+Can request a global container, global bus
+
+# TODO
+* Physics
+  * Bounding boxes
+  * SAT+gravity enough? (Arcade physics)
+  * Lib for kinematic physics?
+  * Lighting? normals
+* UI
+  * Ultralight
+  * Console, commands
+* Viewports (camera)
+* Net code
+* Sound, streams
+* Particles
+* Shaders
+* Debug
+  * Bounding boxes, entities, trees
+* Tile maps (TileD)
