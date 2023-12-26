@@ -41,6 +41,7 @@ public class MainScene : SceneBase
         _logger.LogInformation("MainScene::Create()");
         
         World.Create(
+            new UiComponent(),
             new SpriteComponent(_textureCache.GetTexture("spritesheet.png"), new Vector2f(10, 200), new IntRect(150, 20, 32, 100)),
             new AnimationComponent
             {

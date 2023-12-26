@@ -4,13 +4,18 @@ using Nord.Engine.Ecs.Components;
 
 namespace Nord.Engine.Ecs.Systems;
 
-public class DefaultTextRenderSystem(
-    World world,
-    MainRenderTarget renderTarget) : SystemBase(world)
+public class DefaultTextRenderSystem : SystemBase
 {
-    private readonly MainRenderTarget _renderTarget = renderTarget;
+    private readonly MainRenderTarget _renderTarget;
     private readonly QueryDescription _query = new QueryDescription()
         .WithAll<TextComponent>();
+
+    public DefaultTextRenderSystem(
+        World world,
+        MainRenderTarget renderTarget) : base(world)
+    {
+        _renderTarget = renderTarget;
+    }
     
     public override void Update(float dt)
     {

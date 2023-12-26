@@ -25,6 +25,7 @@ public static class StashboxContainerExtensions
         container.RegisterSingleton<ISystem, DefaultAnimationSystem>();
         container.RegisterSingleton<ISystem, DefaultRenderSystem>();
         container.RegisterSingleton<ISystem, DefaultTextRenderSystem>();
+        container.RegisterSingleton<ISystem, DefaultUiRenderSystem>();
         
         return container;
     }
