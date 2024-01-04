@@ -48,13 +48,13 @@ public class DefaultUiRenderSystem : SystemBase
         AppCoreMethods.SetPlatformFontLoader();
         var cfg = new ULConfig();
         _renderer = ULPlatform.CreateRenderer(cfg);
-        _view = _renderer.CreateView(1024, 768);
+        _view = _renderer.CreateView(1024, 768, new ULViewConfig(){IsTransparent = true, InitialDeviceScale = 1.0});
         _view.OnFinishLoading += (_, _, _) =>
         {
             _isLoaded = true;
             _view!.Focus();
         };
-        _view.HTML = "<html><head><style type='text/css'>*,html,body{margin:0;padding:0;}</style></head><body><input type='text'/></body></html>";
+        _view.HTML = "<html><head><style type='text/css'>*,html,body{margin:0;padding:0;width:auto;height:auto;font-family:'Ubuntu Regular'}input{padding:5px;}</style></head><body><input type='text'/></body></html>";
     }
 
     public override void Update(float dt)

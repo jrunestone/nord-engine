@@ -38,6 +38,7 @@ public class DefaultApplication : IApplication
     public virtual void Run()
     {
         _window.Size = new Vector2u(_options.VideoMode.Width, _options.VideoMode.Height);
+        _window.SetView(new View(new FloatRect(0, 0, _options.VideoMode.Width, _options.VideoMode.Height)));
         _window.SetTitle(_options.Name);
         _window.SetVisible(true);
         _window.Closed += (_, _) => _window.Close();
