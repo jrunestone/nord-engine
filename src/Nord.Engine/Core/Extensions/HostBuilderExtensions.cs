@@ -47,9 +47,6 @@ public static class HostBuilderExtensions
                 services.AddSingleton<ICommandHandlerFactory, DefaultCommandHandlerFactory>(_ => new DefaultCommandHandlerFactory(container));
                 container.RegisterOpenGenericImplementations(Assembly.GetExecutingAssembly(), typeof(ICommandHandler<>));
                 
-                // global processes
-                services.AddSingleton<IGlobalProcess, DefaultRawInputProcess>();
-                
                 // scenes
                 services.AddSingleton<ISceneFactory, DefaultSceneFactory>(_ => new DefaultSceneFactory(container));
                 services.AddSingleton<ISceneService, DefaultSceneService>();

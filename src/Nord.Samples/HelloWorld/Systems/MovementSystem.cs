@@ -31,8 +31,8 @@ public class MovementSystem : SystemBase
         _logger = logger;
         
         bus.Subscribe<InputActionActivated<RightInputAction>>(HandleRightAction);
-        _globalBus.Subscribe<KeyDownEvent>(HandleRawInputDown);
-        _globalBus.Subscribe<KeyUpEvent>(HandleRawInputUp);
+        bus.Subscribe<KeyDownEvent>(HandleRawInputDown);
+        bus.Subscribe<KeyUpEvent>(HandleRawInputUp);
     }
 
     public override void Update(float dt)
