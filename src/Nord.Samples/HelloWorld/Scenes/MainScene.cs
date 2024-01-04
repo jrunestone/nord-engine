@@ -100,7 +100,8 @@ public class MainScene : SceneBase
             });
 
         World.Create(
-            new TextComponent("Debug text", _fontCache.DefaultFont, new Vector2f(10, 10)));
+            new FpsComponent(),
+            new TextComponent("FPS: {0}", _fontCache.DefaultFont, new Vector2f(10, 10)));
         
         _bus.Send<ChangeInputActionMapCommand<DefaultInputActionMap>>();
     }
