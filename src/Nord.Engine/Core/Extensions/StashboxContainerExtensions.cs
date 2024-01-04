@@ -36,6 +36,7 @@ public static class StashboxContainerExtensions
         // scene-scoped
         container.RegisterSingleton<IInputActionMapService, DefaultInputActionMapService>();
         container.RegisterSingleton<IProcess, DefaultInputActionProcess>();
+        container.RegisterSingleton<IProcess, DefaultRawInputProcess>();
         
         return container;
     }

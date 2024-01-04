@@ -9,9 +9,9 @@ namespace Nord.Engine.Input;
 public class DefaultRawInputProcess : IGlobalProcess
 {
     private readonly IDictionary<Keyboard.Key, bool> _keyboardMap = new Dictionary<Keyboard.Key, bool>();
-    private readonly IGlobalBus _bus;
+    private readonly IBus _bus;
 
-    public DefaultRawInputProcess(IGlobalBus bus, RenderWindow window)
+    public DefaultRawInputProcess(IBus bus, RenderWindow window)
     {
         _bus = bus;
 
