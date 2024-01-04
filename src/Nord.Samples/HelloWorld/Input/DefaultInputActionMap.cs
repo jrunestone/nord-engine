@@ -1,4 +1,5 @@
 using Nord.Engine.Input;
+using Nord.Engine.Input.ActionMaps;
 using SFML.Window;
 
 namespace Nord.Samples.HelloWorld.Input;

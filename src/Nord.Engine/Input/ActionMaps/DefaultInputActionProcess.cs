@@ -1,15 +1,14 @@
-using System.Reflection;
 using Nord.Engine.Core;
 using Nord.Engine.Core.Bus;
 
-namespace Nord.Engine.Input;
+namespace Nord.Engine.Input.ActionMaps;
 
-public class DefaultInputProcess : IProcess
+public class DefaultInputActionProcess : IProcess
 {
     private readonly IBus _bus;
     private readonly IInputActionMapService _inputActionMapService;
 
-    public DefaultInputProcess(IBus bus, IInputActionMapService inputActionMapService)
+    public DefaultInputActionProcess(IBus bus, IInputActionMapService inputActionMapService)
     {
         _bus = bus;
         _inputActionMapService = inputActionMapService;

@@ -1,6 +1,6 @@
 using Nord.Engine.Core.Bus;
 
-namespace Nord.Engine.Input;
+namespace Nord.Engine.Input.ActionMaps;
 
 public interface IChangeInputActionMapCommand : ICommand
 {

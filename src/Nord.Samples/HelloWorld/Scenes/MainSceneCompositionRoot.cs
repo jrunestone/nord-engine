@@ -1,6 +1,7 @@
 using Nord.Engine.Core.Extensions;
 using Nord.Engine.Ecs;
 using Nord.Engine.Input;
+using Nord.Engine.Input.ActionMaps;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Input;
 using Nord.Samples.HelloWorld.Systems;

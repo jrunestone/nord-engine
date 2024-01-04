@@ -1,4 +1,4 @@
-namespace Nord.Engine.Input;
+namespace Nord.Engine.Input.ActionMaps;
 
 public interface IInputActionMapService
 {

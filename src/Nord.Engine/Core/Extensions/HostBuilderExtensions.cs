@@ -8,7 +8,9 @@ using Nord.Engine.Core.Configuration;
 using Nord.Engine.Input;
 using Nord.Engine.Scenes;
 using Serilog;
+using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
 using Stashbox;
 
 namespace Nord.Engine.Core.Extensions;
@@ -45,12 +47,22 @@ public static class HostBuilderExtensions
                 services.AddSingleton<ICommandHandlerFactory, DefaultCommandHandlerFactory>(_ => new DefaultCommandHandlerFactory(container));
                 container.RegisterOpenGenericImplementations(Assembly.GetExecutingAssembly(), typeof(ICommandHandler<>));
                 
+                // global processes
+                services.AddSingleton<IGlobalProcess, DefaultRawInputProcess>();
+                
                 // scenes
                 services.AddSingleton<ISceneFactory, DefaultSceneFactory>(_ => new DefaultSceneFactory(container));
                 services.AddSingleton<ISceneService, DefaultSceneService>();
 
-                // main application
-                services.AddScoped<IApplication, TApplication>();
+                // main application and window
+                services.AddSingleton<RenderWindow>(_ =>
+                {
+                    var window = new RenderWindow(new VideoMode(640, 480), "nord");
+                    window.SetVisible(false);
+                    return window;
+                });
+                
+                services.AddSingleton<IApplication, TApplication>();
             })
             .UseSerilog((hostingContext, services, loggerConfiguration) =>
             {
