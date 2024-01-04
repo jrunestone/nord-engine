@@ -1,6 +1,6 @@
 using SFML.Window;
 
-namespace Nord.Engine.Input;
+namespace Nord.Engine.Input.ActionMaps;
 
 public class KeyboardDeviceTrigger : IInputDeviceTrigger
 {

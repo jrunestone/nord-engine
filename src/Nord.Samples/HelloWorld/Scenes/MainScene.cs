@@ -6,6 +6,7 @@ using Nord.Engine.Core.Bus;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Components;
 using Nord.Engine.Input;
+using Nord.Engine.Input.ActionMaps;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Input;
 using SFML.Graphics;

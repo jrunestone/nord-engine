@@ -1,4 +1,4 @@
-namespace Nord.Engine.Input;
+namespace Nord.Engine.Input.ActionMaps;
 
 public class InputActionActivated<T> : IInputActionEvent<T> where T : IInputAction
 {

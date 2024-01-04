@@ -4,6 +4,7 @@ using Nord.Engine.Core.Bus;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Systems;
 using Nord.Engine.Input;
+using Nord.Engine.Input.ActionMaps;
 using Stashbox;
 
 namespace Nord.Engine.Core.Extensions;
@@ -12,7 +13,7 @@ public static class StashboxContainerExtensions
 {
     public static IStashboxContainer AddCore(this IStashboxContainer container)
     {
-        // scene-scoped bus
+        // scene-scoped
         container.RegisterSingleton<IBus, DefaultBus>();
         container.RegisterInstance<ICommandHandlerFactory>(new DefaultCommandHandlerFactory(container));
         container.RegisterOpenGenericImplementations(Assembly.GetExecutingAssembly(), typeof(ICommandHandler<>));
@@ -22,6 +23,7 @@ public static class StashboxContainerExtensions
     
     public static IStashboxContainer AddRendering(this IStashboxContainer container)
     {
+        // scene-scoped
         container.RegisterSingleton<ISystem, DefaultAnimationSystem>();
         container.RegisterSingleton<ISystem, DefaultRenderSystem>();
         container.RegisterSingleton<ISystem, DefaultTextRenderSystem>();
@@ -31,14 +33,16 @@ public static class StashboxContainerExtensions
     
     public static IStashboxContainer AddInput(this IStashboxContainer container)
     {
+        // scene-scoped
         container.RegisterSingleton<IInputActionMapService, DefaultInputActionMapService>();
-        container.RegisterSingleton<IProcess, DefaultInputProcess>();
+        container.RegisterSingleton<IProcess, DefaultInputActionProcess>();
         
         return container;
     }
      
     public static IStashboxContainer AddEntityContext(this IStashboxContainer container)
     {
+        // scene-scoped
         container.RegisterInstance<World>(World.Create(), finalizerDelegate: World.Destroy);
         return container;
     }
