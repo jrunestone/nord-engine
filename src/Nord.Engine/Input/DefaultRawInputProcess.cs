@@ -6,7 +6,7 @@ using SFML.Window;
 
 namespace Nord.Engine.Input;
 
-public class DefaultRawInputProcess : IGlobalProcess
+public class DefaultRawInputProcess : IProcess
 {
     private readonly IDictionary<Keyboard.Key, bool> _keyboardMap = new Dictionary<Keyboard.Key, bool>();
     private readonly IBus _bus;
@@ -17,6 +17,7 @@ public class DefaultRawInputProcess : IGlobalProcess
 
         window.KeyPressed += (_, e) => HandleKeyboardInput(e, true);
         window.KeyReleased += (_, e) => HandleKeyboardInput(e, false);
+        window.TextEntered += (_, e) => HandleTextInput(e);
     }
 
     public void Update(float dt)
@@ -36,5 +37,10 @@ public class DefaultRawInputProcess : IGlobalProcess
         {
             _bus.Publish(new KeyUpEvent(@event.Code));
         }
+    }
+
+    private void HandleTextInput(TextEventArgs @event)
+    { 
+        _bus.Publish(new TextInputEvent(@event.Unicode));
     }
 }

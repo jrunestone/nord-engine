@@ -2,7 +2,9 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Arch.Core;
 using Nord.Engine.Core;
+using Nord.Engine.Core.Bus;
 using Nord.Engine.Ecs.Components;
+using Nord.Engine.Input;
 using SFML.Graphics;
 using SFML.Window;
 using UltralightNet;
@@ -23,9 +25,22 @@ public class DefaultUiRenderSystem : SystemBase
 
     public DefaultUiRenderSystem(
         World world,
-        MainRenderTarget renderTarget) : base(world)
+        MainRenderTarget renderTarget,
+        IBus bus) : base(world)
     {
         _renderTarget = renderTarget;
+        bus.Subscribe<KeyDownEvent>(KeyDownHandler);
+        bus.Subscribe<TextInputEvent>(TextInputHandler);
+    }
+
+    private void KeyDownHandler(KeyDownEvent obj)
+    {
+        _view!.FireKeyEvent(ULKeyEvent.Create(ULKeyEventType.RawKeyDown, 0, 65, 0, obj.Key.ToString(), obj.Key.ToString(), false, false, false));
+    }
+    
+    private void TextInputHandler(TextInputEvent obj)
+    {
+        _view!.FireKeyEvent(ULKeyEvent.Create(ULKeyEventType.Char, 0, 65, 0, obj.Character, obj.Character, false, false, false));
     }
 
     public override void Initialize()
@@ -72,11 +87,6 @@ public class DefaultUiRenderSystem : SystemBase
                 _view!.FireMouseEvent(new ULMouseEvent(){Button = ULMouseEventButton.Left, Type = ULMouseEventType.MouseDown, X = 1, Y = 1});
             }
 
-            if (Keyboard.IsKeyPressed(Keyboard.Key.A))
-            {
-                _view!.FireKeyEvent(ULKeyEvent.Create(ULKeyEventType.RawKeyDown, ULKeyEventModifiers.ShiftKey, 65, 0, "A", "a", false, false, false));
-                _view!.FireKeyEvent(ULKeyEvent.Create(ULKeyEventType.Char, ULKeyEventModifiers.ShiftKey, 65, 0, "A", "a", false, false, false));
-            }
             _renderTarget.RenderTexture?.Draw(ui.Sprite);
         });
     }
