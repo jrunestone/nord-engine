@@ -19,7 +19,7 @@ public class DefaultRawInputProcess : IGlobalProcess
         window.KeyReleased += (_, e) => HandleKeyboardInput(e, false);
     }
 
-    public void Update(float dt)
+    public void Update(Time time)
     {
         _keyboardMap
             .Where(x => x.Value)

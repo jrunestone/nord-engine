@@ -12,7 +12,7 @@ public class DefaultTextRenderSystem(
     private readonly QueryDescription _query = new QueryDescription()
         .WithAll<TextComponent>();
     
-    public override void Update(float dt)
+    public override void Update(Time time)
     {
         World.Query(in _query, (ref TextComponent text) =>
         {

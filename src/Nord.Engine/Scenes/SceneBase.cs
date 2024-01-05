@@ -9,14 +9,14 @@ namespace Nord.Engine.Scenes;
 public abstract class SceneBase : IScene
 {
     protected World World { get; }
-    protected Group<float> Systems { get; }
+    protected Group<Time> Systems { get; }
     protected IEnumerable<IProcess> Processes { get; }
 
     public SceneBase(World world, IEnumerable<ISystem> systems, IEnumerable<IProcess> processes)
     {
         World = world;
         Processes = processes;
-        Systems = new(systems.Cast<ISystem<float>>().ToArray());
+        Systems = new(systems.Cast<ISystem<Time>>().ToArray());
     }
     
     public virtual void Create()
@@ -24,12 +24,12 @@ public abstract class SceneBase : IScene
         Systems.Initialize();
     }
     
-    public virtual void Update(float dt)
+    public virtual void Update(Time time)
     {
-        Processes.ForEach(x => x.Update(dt));
-        Systems.BeforeUpdate(dt);
-        Systems.Update(dt);
-        Systems.AfterUpdate(dt);
+        Processes.ForEach(x => x.Update(time));
+        Systems.BeforeUpdate(time);
+        Systems.Update(time);
+        Systems.AfterUpdate(time);
     }
 
     public void Dispose()

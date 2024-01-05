@@ -15,7 +15,7 @@ public class DefaultRenderSystem : SystemBase
         _renderTarget = renderTarget;
     }
     
-    public override void Update(float dt)
+    public override void Update(Time time)
     {
         World.Query(in _query, (ref SpriteComponent sprite) =>
         {

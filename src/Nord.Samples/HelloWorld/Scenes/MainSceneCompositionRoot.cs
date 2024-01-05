@@ -22,7 +22,6 @@ public class MainSceneCompositionRoot : ISceneCompositionRoot<MainScene>
         container.RegisterSingleton<IInputActionMap, DefaultInputActionMap>();
         
         // systems
-        container.RegisterSingleton<ISystem, FpsTextSystem>();
         container.RegisterSingleton<ISystem, MovementSystem>();
         
         // scene

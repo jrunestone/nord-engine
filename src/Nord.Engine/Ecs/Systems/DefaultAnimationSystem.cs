@@ -1,4 +1,5 @@
 using Arch.Core;
+using Nord.Engine.Core;
 using Nord.Engine.Ecs.Components;
 
 namespace Nord.Engine.Ecs.Systems;
@@ -13,14 +14,14 @@ public class DefaultAnimationSystem : SystemBase
         
     }
     
-    public override void Update(float dt)
+    public override void Update(Time time)
     {
         World.Query(in _query, (ref SpriteComponent sprite, ref AnimationComponent animation) =>
         {
             var currentAnimation = animation.CurrentAnimation ?? animation.Animations.First();
             var frame = currentAnimation.CurrentFrame ?? currentAnimation.Frames.First();
             
-            animation.FrameCounter += dt;
+            animation.FrameCounter += time.Dt;
 
             if (animation.FrameCounter >= frame.Delay)
             {

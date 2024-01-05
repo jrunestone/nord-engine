@@ -17,8 +17,6 @@ public static class StashboxContainerExtensions
         container.RegisterSingleton<IBus, DefaultBus>();
         container.RegisterInstance<ICommandHandlerFactory>(new DefaultCommandHandlerFactory(container));
         container.RegisterOpenGenericImplementations(Assembly.GetExecutingAssembly(), typeof(ICommandHandler<>));
-
-        container.RegisterSingleton<ISystem, DefaultFpsSystem>();
         
         return container;
     }

@@ -35,9 +35,9 @@ public class MovementSystem : SystemBase
         bus.Subscribe<KeyUpEvent>(HandleRawInputUp);
     }
 
-    public override void Update(float dt)
+    public override void Update(Time time)
     {
-        Elapsed += dt;
+        Elapsed += time.Dt;
         if (Elapsed >= 1)
         {
             _logger.LogInformation("{Time}", Elapsed);

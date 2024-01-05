@@ -37,7 +37,7 @@ public static class HostBuilderExtensions
                 AddOptions(context, services, engineConfiguration);
 
                 // core
-                services.AddSingleton<Clock>(_ => new Clock());
+                services.AddSingleton<Time>(_ => new Time());
                 services.AddSingleton<MainRenderTarget>();
                 services.AddSingleton<ITextureCache, DefaultTextureCache>();
                 services.AddSingleton<IFontCache, DefaultFontCache>();

@@ -1,8 +1,9 @@
 using Arch.System;
+using Nord.Engine.Core;
 
 namespace Nord.Engine.Ecs;
 
-public interface ISystem : ISystem<float>
+public interface ISystem : ISystem<Time>
 {
-    void Update(float dt);
+    void Update(Time time);
 }
