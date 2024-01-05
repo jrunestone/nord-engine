@@ -51,8 +51,10 @@ public class DefaultApplication : IApplication
             // window.Clear(new Color(46, 52, 64));
             
             _mainRenderTarget.RenderTexture!.Clear(new Color(46, 52, 64));
+            
             _processes.ForEach(x => x.Update(_time));
             _sceneService.CurrentScene?.Update(_time);
+            
             _mainRenderTarget.RenderTexture!.Display();
             
             _window.Draw(_mainRenderTarget.Sprite);

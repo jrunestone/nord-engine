@@ -1,4 +1,5 @@
 using Arch.Core;
+using Arch.Core.Extensions;
 using Nord.Engine.Core;
 using Nord.Engine.Ecs.Components;
 
@@ -17,9 +18,29 @@ public class DefaultRenderSystem : SystemBase
     
     public override void Update(Time time)
     {
-        World.Query(in _query, (ref SpriteComponent sprite) =>
+        var entities = new List<Entity>();
+        World.GetEntities(in _query, entities);
+
+        // TODO: sort only when changed?
+        entities.Sort((x, y) =>
         {
-            _renderTarget.RenderTexture?.Draw(sprite.Sprite);
+            var layerX = GetEntityRenderLayer(x);
+            var layerY = GetEntityRenderLayer(y);
+
+            return layerX.CompareTo(layerY);
         });
+        
+        foreach (var entity in entities)
+        {
+            var sprite = entity.Get<SpriteComponent>();
+            _renderTarget.RenderTexture?.Draw(sprite.Sprite);
+        }
+    }
+
+    private int GetEntityRenderLayer(Entity entity)
+    {
+        return entity.Has<RenderLayerComponent>() ? 
+            entity.Get<RenderLayerComponent>().Layer 
+            : (int)RenderLayer.Default;
     }
 }
