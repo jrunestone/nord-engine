@@ -18,17 +18,13 @@ public class DefaultRenderSystem : SystemBase
     
     public override void Update(Time time)
     {
+        // TODO: sort only when changed?
         var entities = new List<Entity>();
         World.GetEntities(in _query, entities);
 
-        // TODO: sort only when changed?
-        entities.Sort((x, y) =>
-        {
-            var layerX = GetEntityRenderLayer(x);
-            var layerY = GetEntityRenderLayer(y);
-
-            return layerX.CompareTo(layerY);
-        });
+        var sortedEntities = entities
+            .OrderBy(GetEntityRenderLayer)
+            .ThenBy(GetEntityTextureId);
         
         foreach (var entity in entities)
         {
@@ -42,5 +38,10 @@ public class DefaultRenderSystem : SystemBase
         return entity.Has<RenderLayerComponent>() ? 
             entity.Get<RenderLayerComponent>().Layer 
             : (int)RenderLayer.Default;
+    }
+
+    private uint GetEntityTextureId(Entity entity)
+    {
+        return entity.Get<SpriteComponent>().TextureId;
     }
 }

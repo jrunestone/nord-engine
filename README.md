@@ -22,7 +22,7 @@
 
 # Rendering
 * All SpriteComponent are rendered to the main render target (render texture) and then to the window
-* Rendering is grouped by texture and sorted by RenderLayerComponent(number)
+* Rendering is sorted by by RenderLayerComponent(number) and then by texture
 * Custom RenderTargetComponent(id) can be used (render to this, then to the main render target and/or then to the window)
 * The rendering targets use the global camera when rendering to the window
 * A custom CameraComponent can be used to render a custom view before rendering to the main rendering target and window
@@ -37,12 +37,10 @@
 
 # UI
 
-
 # TODO
 * Rendering
-  * Layers
-  * Group by textures
   * Entity builder
+  * Instancing/batching (tile maps, particles, ...)
 * UI
   * Ultralight
   * Console, commands
