@@ -26,7 +26,7 @@ public class DefaultRenderSystem : SystemBase
             .OrderBy(GetEntityRenderLayer)
             .ThenBy(GetEntityTextureId);
         
-        foreach (var entity in entities)
+        foreach (var entity in sortedEntities)
         {
             var sprite = entity.Get<SpriteComponent>();
             _renderTarget.RenderTexture?.Draw(sprite.Sprite);
