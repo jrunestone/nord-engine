@@ -105,7 +105,8 @@ public class MainScene : SceneBase
 
         World.Create(
             new DrawableComponent(),
-            new TextComponent("FPS: {0}", _fontCache.DefaultFont, new Vector2f(10, 10)));
+            new RenderLayerComponent((int)RenderLayer.Ui),
+            new TextComponent("FPS: {0}", _fontCache.DefaultFont, new Vector2f(10, 200)));
         
         _bus.Send<ChangeInputActionMapCommand<DefaultInputActionMap>>();
     }
