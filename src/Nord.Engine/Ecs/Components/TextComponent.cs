@@ -3,10 +3,13 @@ using SFML.System;
 
 namespace Nord.Engine.Ecs.Components;
 
-public class TextComponent
+public class TextComponent : IDrawableComponent
 {
-    public Text Text { get; init; }
-    public string OriginalString { get; init; }
+    public Drawable Drawable => Text;
+    public uint? TextureId => null;
+    
+    public Text Text { get; }
+    public string OriginalString { get; }
 
     public TextComponent(string text, Font font, Vector2f position, uint? size = null, Color? color = null)
     {

@@ -3,10 +3,12 @@ using SFML.System;
 
 namespace Nord.Engine.Ecs.Components;
 
-public class SpriteComponent
+public class SpriteComponent : IDrawableComponent
 {
-    public Sprite Sprite { get; init; }
-    public uint TextureId => Sprite.Texture.NativeHandle;
+    public Drawable Drawable => Sprite;
+    public uint? TextureId => Sprite.Texture.NativeHandle;
+    
+    public Sprite Sprite { get; }
 
     public SpriteComponent(Texture texture, Vector2f? position = null, IntRect? coords = null)
     {

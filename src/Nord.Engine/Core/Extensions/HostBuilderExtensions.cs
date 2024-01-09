@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Nord.Engine.Core.Assets;
 using Nord.Engine.Core.Bus;
 using Nord.Engine.Core.Configuration;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Input;
 using Nord.Engine.Scenes;
 using Serilog;
@@ -38,7 +39,7 @@ public static class HostBuilderExtensions
 
                 // core
                 services.AddSingleton<Time>(_ => new Time());
-                services.AddSingleton<MainRenderTarget>();
+                services.AddSingleton<IMainRenderTarget, MainRenderTarget>();
                 services.AddSingleton<ITextureCache, DefaultTextureCache>();
                 services.AddSingleton<IFontCache, DefaultFontCache>();
                 

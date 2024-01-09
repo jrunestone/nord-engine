@@ -26,7 +26,6 @@ public static class StashboxContainerExtensions
         // scene-scoped
         container.RegisterSingleton<ISystem, DefaultAnimationSystem>();
         container.RegisterSingleton<ISystem, DefaultRenderSystem>();
-        container.RegisterSingleton<ISystem, DefaultTextRenderSystem>();
         
         return container;
     }

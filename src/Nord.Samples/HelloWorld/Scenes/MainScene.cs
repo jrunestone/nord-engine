@@ -5,7 +5,6 @@ using Nord.Engine.Core.Assets;
 using Nord.Engine.Core.Bus;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Components;
-using Nord.Engine.Input;
 using Nord.Engine.Input.ActionMaps;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Input;
@@ -42,6 +41,7 @@ public class MainScene : SceneBase
         _logger.LogInformation("MainScene::Create()");
         
         World.Create(
+            new DrawableComponent(),
             new SpriteComponent(_textureCache.GetTexture("spritesheet.png"), new Vector2f(10, 200), new IntRect(150, 20, 32, 100)),
             new AnimationComponent
             {
@@ -100,6 +100,7 @@ public class MainScene : SceneBase
             });
 
         World.Create(
+            new DrawableComponent(),
             new TextComponent("FPS: {0}", _fontCache.DefaultFont, new Vector2f(10, 10)));
         
         _bus.Send<ChangeInputActionMapCommand<DefaultInputActionMap>>();

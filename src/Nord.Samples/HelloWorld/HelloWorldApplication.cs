@@ -1,6 +1,7 @@
 using Nord.Engine.Core;
 using Nord.Engine.Core.Bus;
 using Nord.Engine.Core.Configuration;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Scenes;
 using SFML.Graphics;
@@ -14,7 +15,7 @@ public class HelloWorldApplication : DefaultApplication
     public HelloWorldApplication(
         EngineOptions options,
         RenderWindow window,
-        MainRenderTarget mainRenderTarget,
+        IMainRenderTarget mainRenderTarget,
         Time time,
         IGlobalBus bus,
         ISceneService sceneService,

@@ -1,6 +1,7 @@
 using Nord.Engine.Core.Bus;
 using Nord.Engine.Core.Configuration;
 using Nord.Engine.Core.Extensions;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Scenes;
 using SFML.Graphics;
 using SFML.System;
@@ -12,15 +13,14 @@ public class DefaultApplication : IApplication
     private readonly EngineOptions _options;
     private readonly Time _time;
     private readonly RenderWindow _window;
-    private readonly MainRenderTarget _mainRenderTarget;
-    private readonly IGlobalBus _bus;
+    private readonly IMainRenderTarget _mainRenderTarget;
     private readonly ISceneService _sceneService;
     private readonly IEnumerable<IGlobalProcess> _processes;
 
     public DefaultApplication(
         EngineOptions options,
         RenderWindow window,
-        MainRenderTarget mainRenderTarget,
+        IMainRenderTarget mainRenderTarget,
         Time time,
         IGlobalBus bus,
         ISceneService sceneService,
@@ -30,7 +30,6 @@ public class DefaultApplication : IApplication
         _window = window;
         _mainRenderTarget = mainRenderTarget;
         _time = time;
-        _bus = bus;
         _sceneService = sceneService;
         _processes = processes;
     }

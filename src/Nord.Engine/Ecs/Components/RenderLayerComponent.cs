@@ -1,3 +1,5 @@
+using SFML.Graphics;
+
 namespace Nord.Engine.Ecs.Components;
 
 public class RenderLayerComponent
