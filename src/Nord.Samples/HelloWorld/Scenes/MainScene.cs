@@ -3,9 +3,10 @@ using Microsoft.Extensions.Logging;
 using Nord.Engine.Core;
 using Nord.Engine.Core.Assets;
 using Nord.Engine.Core.Bus;
+using Nord.Engine.Core.Configuration;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Components;
-using Nord.Engine.Input;
 using Nord.Engine.Input.ActionMaps;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Input;
@@ -22,13 +23,15 @@ public class MainScene : SceneBase
     private readonly ILogger<MainScene> _logger;
 
     public MainScene(
+        EngineOptions options,
         World world, 
         IEnumerable<ISystem> systems,
         IEnumerable<IProcess> processes,
+        IEnumerable<IRenderLayerRenderTarget> renderLayerRenderTargets,
         ITextureCache textureCache,
         IFontCache fontCache,
         IBus bus,
-        ILogger<MainScene> logger) : base(world, systems, processes)
+        ILogger<MainScene> logger) : base(options, world, systems, processes, renderLayerRenderTargets)
     {
         _textureCache = textureCache;
         _fontCache = fontCache;
@@ -40,9 +43,13 @@ public class MainScene : SceneBase
     {
         base.Create();
         _logger.LogInformation("MainScene::Create()");
+
+        World.Create(
+            new UiComponent()
+        );
         
         World.Create(
-            new UiComponent(),
+            new DrawableComponent(),
             new SpriteComponent(_textureCache.GetTexture("spritesheet.png"), new Vector2f(10, 200), new IntRect(150, 20, 32, 100)),
             new AnimationComponent
             {
@@ -101,7 +108,9 @@ public class MainScene : SceneBase
             });
 
         World.Create(
-            new TextComponent("Debug text", _fontCache.DefaultFont, new Vector2f(10, 10)));
+            new DrawableComponent(),
+            new RenderLayerComponent((int)RenderLayer.Ui),
+            new TextComponent("FPS: {0}", _fontCache.DefaultFont, new Vector2f(10, 200)));
         
         _bus.Send<ChangeInputActionMapCommand<DefaultInputActionMap>>();
     }

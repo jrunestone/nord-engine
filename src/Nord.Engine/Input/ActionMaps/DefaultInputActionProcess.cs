@@ -14,7 +14,7 @@ public class DefaultInputActionProcess : IProcess
         _inputActionMapService = inputActionMapService;
     }
     
-    public void Update(float dt)
+    public void Update(Time time)
     {
         if (_inputActionMapService.CurrentActionMap == null)
         {

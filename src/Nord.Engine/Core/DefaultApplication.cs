@@ -1,6 +1,6 @@
-using Nord.Engine.Core.Bus;
 using Nord.Engine.Core.Configuration;
 using Nord.Engine.Core.Extensions;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Scenes;
 using SFML.Graphics;
 using SFML.System;
@@ -10,28 +10,25 @@ namespace Nord.Engine.Core;
 public class DefaultApplication : IApplication
 {
     private readonly EngineOptions _options;
-    private readonly Clock _clock;
+    private readonly Time _time;
     private readonly RenderWindow _window;
-    private readonly MainRenderTarget _mainRenderTarget;
-    private readonly IGlobalBus _bus;
     private readonly ISceneService _sceneService;
+    private readonly IMainRenderTarget _mainRenderTarget;
     private readonly IEnumerable<IGlobalProcess> _processes;
 
     public DefaultApplication(
         EngineOptions options,
+        Time time,
         RenderWindow window,
-        MainRenderTarget mainRenderTarget,
-        Clock clock,
-        IGlobalBus bus,
         ISceneService sceneService,
+        IMainRenderTarget mainRenderTarget,
         IEnumerable<IGlobalProcess> processes)
     {
         _options = options;
+        _time = time;
         _window = window;
-        _mainRenderTarget = mainRenderTarget;
-        _clock = clock;
-        _bus = bus;
         _sceneService = sceneService;
+        _mainRenderTarget = mainRenderTarget;
         _processes = processes;
     }
     
@@ -47,15 +44,15 @@ public class DefaultApplication : IApplication
 
         while (_window.IsOpen)
         {
-            var time = _clock.Restart();
-            var dt = time.AsSeconds();
-            
+            _time.Update();
             _window.DispatchEvents();
             // window.Clear(new Color(46, 52, 64));
             
-            _mainRenderTarget.RenderTexture!.Clear(new Color(46, 52, 64));
-            _processes.ForEach(x => x.Update(dt));
-            _sceneService.CurrentScene?.Update(dt);
+            _mainRenderTarget.RenderTexture!.Clear(Colors.Clear);
+            
+            _processes.ForEach(x => x.Update(_time));
+            _sceneService.CurrentScene?.Update(_time);
+            
             _mainRenderTarget.RenderTexture!.Display();
             
             _window.Draw(_mainRenderTarget.Sprite);

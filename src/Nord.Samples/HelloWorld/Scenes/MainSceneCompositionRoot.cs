@@ -1,6 +1,5 @@
 using Nord.Engine.Core.Extensions;
 using Nord.Engine.Ecs;
-using Nord.Engine.Input;
 using Nord.Engine.Input.ActionMaps;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Input;
@@ -15,9 +14,10 @@ public class MainSceneCompositionRoot : ISceneCompositionRoot<MainScene>
     {
         container
             .AddCore()
+            .AddRenderLayer(27)
+            .AddRendering()
             .AddInput()
-            .AddEntityContext()
-            .AddRendering();
+            .AddEntityContext();
         
         // input
         container.RegisterSingleton<IInputActionMap, DefaultInputActionMap>();

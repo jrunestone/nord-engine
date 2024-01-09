@@ -1,10 +1,10 @@
 using Nord.Engine.Core;
 using Nord.Engine.Core.Bus;
 using Nord.Engine.Core.Configuration;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Scenes;
 using Nord.Samples.HelloWorld.Scenes;
 using SFML.Graphics;
-using SFML.System;
 
 namespace Nord.Samples.HelloWorld;
 
@@ -14,13 +14,13 @@ public class HelloWorldApplication : DefaultApplication
 
     public HelloWorldApplication(
         EngineOptions options,
+        Time time,
         RenderWindow window,
-        MainRenderTarget mainRenderTarget,
-        Clock clock,
         IGlobalBus bus,
         ISceneService sceneService,
+        IMainRenderTarget mainRenderTarget,
         IEnumerable<IGlobalProcess> processes) 
-        : base(options, window, mainRenderTarget, clock, bus, sceneService, processes)
+        : base(options, time, window, sceneService, mainRenderTarget, processes)
     {
         _bus = bus;
     }

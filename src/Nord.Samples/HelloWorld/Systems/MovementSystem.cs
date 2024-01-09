@@ -35,17 +35,14 @@ public class MovementSystem : SystemBase
         bus.Subscribe<KeyUpEvent>(HandleRawInputUp);
     }
 
-    public override void Update(float dt)
+    public override void Update(Time time)
     {
-        Elapsed += dt;
+        Elapsed += time.Dt;
         if (Elapsed >= 1)
         {
-            _logger.LogInformation("{Time}", Elapsed);
+            _logger.LogInformation("{Fps}", time.AverageFps);
             Elapsed = 0;
         }
-        // World.Query(in _desc, (ref PositionComponent position) =>
-        // {
-        // }); 
     }
 
     private void HandleRightAction(InputActionActivated<RightInputAction> @event)

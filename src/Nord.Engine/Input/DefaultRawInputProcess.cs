@@ -20,7 +20,7 @@ public class DefaultRawInputProcess : IProcess
         window.TextEntered += (_, e) => HandleTextInput(e);
     }
 
-    public void Update(float dt)
+    public void Update(Time time)
     {
         _keyboardMap
             .Where(x => x.Value)

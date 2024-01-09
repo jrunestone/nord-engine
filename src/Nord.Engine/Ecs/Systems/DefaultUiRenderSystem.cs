@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using Arch.Core;
 using Nord.Engine.Core;
 using Nord.Engine.Core.Bus;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Ecs.Components;
 using Nord.Engine.Input;
 using SFML.Graphics;
@@ -19,13 +20,13 @@ public class DefaultUiRenderSystem : SystemBase
     private View? _view;
     private bool _isLoaded;
     
-    private readonly MainRenderTarget _renderTarget;
+    private readonly IMainRenderTarget _renderTarget;
     private readonly QueryDescription _query = new QueryDescription()
         .WithAll<UiComponent>();
 
     public DefaultUiRenderSystem(
         World world,
-        MainRenderTarget renderTarget,
+        IMainRenderTarget renderTarget,
         IBus bus) : base(world)
     {
         _renderTarget = renderTarget;
@@ -57,7 +58,7 @@ public class DefaultUiRenderSystem : SystemBase
         _view.HTML = "<html><head><style type='text/css'>*,html,body{margin:0;padding:0;width:auto;height:auto;font-family:'Ubuntu Regular'}input{padding:5px;}</style></head><body><input type='text'/></body></html>";
     }
 
-    public override void Update(float dt)
+    public override void Update(Time time)
     {
         _renderer!.Update();
 
