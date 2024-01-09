@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using Nord.Engine.Core;
 using Nord.Engine.Core.Assets;
 using Nord.Engine.Core.Bus;
+using Nord.Engine.Core.Configuration;
+using Nord.Engine.Core.Rendering;
 using Nord.Engine.Ecs;
 using Nord.Engine.Ecs.Components;
 using Nord.Engine.Input.ActionMaps;
@@ -21,13 +23,15 @@ public class MainScene : SceneBase
     private readonly ILogger<MainScene> _logger;
 
     public MainScene(
+        EngineOptions options,
         World world, 
         IEnumerable<ISystem> systems,
         IEnumerable<IProcess> processes,
+        IEnumerable<IRenderLayerRenderTarget> renderLayerRenderTargets,
         ITextureCache textureCache,
         IFontCache fontCache,
         IBus bus,
-        ILogger<MainScene> logger) : base(world, systems, processes)
+        ILogger<MainScene> logger) : base(options, world, systems, processes, renderLayerRenderTargets)
     {
         _textureCache = textureCache;
         _fontCache = fontCache;

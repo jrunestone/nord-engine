@@ -14,13 +14,13 @@ public class HelloWorldApplication : DefaultApplication
 
     public HelloWorldApplication(
         EngineOptions options,
-        RenderWindow window,
-        IMainRenderTarget mainRenderTarget,
         Time time,
+        RenderWindow window,
         IGlobalBus bus,
         ISceneService sceneService,
+        IMainRenderTarget mainRenderTarget,
         IEnumerable<IGlobalProcess> processes) 
-        : base(options, window, mainRenderTarget, time, bus, sceneService, processes)
+        : base(options, time, window, sceneService, mainRenderTarget, processes)
     {
         _bus = bus;
     }

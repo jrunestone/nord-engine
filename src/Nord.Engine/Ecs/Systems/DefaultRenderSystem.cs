@@ -1,15 +1,16 @@
 using Arch.Core;
 using Arch.Core.Extensions;
-using Arch.Core.Utils;
-using Nord.Engine.Core;
+using Nord.Engine.Core.Extensions;
 using Nord.Engine.Core.Rendering;
 using Nord.Engine.Ecs.Components;
+using Time = Nord.Engine.Core.Time;
 
 namespace Nord.Engine.Ecs.Systems;
 
 public class DefaultRenderSystem : SystemBase
 {
-    private readonly IMainRenderTarget _mainRenderTarget;
+    private readonly IEnumerable<IRenderLayerRenderTarget> _renderLayerRenderTargets;
+
     private readonly QueryDescription _query = new QueryDescription()
         .WithAny<DrawableComponent>();
 
@@ -17,50 +18,47 @@ public class DefaultRenderSystem : SystemBase
     {
         public required Entity Entity { get; init; }
         public required IDrawableComponent Drawable { get; init; }
+        public required IRenderLayerRenderTarget RenderLayer { get; init; }
     }
     
-    public DefaultRenderSystem(World world, IMainRenderTarget mainRenderTarget) : base(world)
+    public DefaultRenderSystem(
+        World world, 
+        IEnumerable<IRenderLayerRenderTarget> renderLayerRenderTargets) : base(world)
     {
-        _mainRenderTarget = mainRenderTarget;
+        _renderLayerRenderTargets = renderLayerRenderTargets;
     }
     
     public override void Update(Time time)
     {
-        if (_mainRenderTarget.RenderTexture == null)
-        {
-            return;
-        }
-        
-        // TODO: sort only when changed?
         var entities = new List<Entity>();
         World.GetEntities(in _query, entities);
 
         var sortedEntities = entities
             .Where(x => GetDrawableComponent(x) != null)
-            .Select(x => new DrawableEntity { Entity = x, Drawable = GetDrawableComponent(x)! })
+            .Select(x => new DrawableEntity
+            {
+                Entity = x, 
+                Drawable = GetDrawableComponent(x)!,
+                RenderLayer = GetEntityRenderLayer(x)
+            })
             
             // sort by layer
-            .OrderBy(GetEntityRenderLayer)
+            .OrderBy(x => x.RenderLayer.Layer)
             
             // then by texture (if any)
-            .ThenBy(GetEntityTextureId);
-        
-        foreach (var entity in sortedEntities)
-        {
-            _mainRenderTarget.RenderTexture.Draw(entity.Drawable.Drawable);
-        }
+            .ThenBy(x => x.Drawable.TextureId ?? 0);
+
+        sortedEntities.ForEach(x => x.RenderLayer.RenderTexture?.Draw(x.Drawable.Drawable));
     }
 
-    private int GetEntityRenderLayer(DrawableEntity entity)
+    private IRenderLayerRenderTarget GetEntityRenderLayer(Entity entity)
     {
-        return entity.Entity.Has<RenderLayerComponent>() ? 
-            entity.Entity.Get<RenderLayerComponent>().Layer 
+        var layerNum = entity.Has<RenderLayerComponent>() ? 
+            entity.Get<RenderLayerComponent>().Layer 
             : (int)RenderLayer.Default;
-    }
 
-    private uint GetEntityTextureId(DrawableEntity entity)
-    {
-        return entity.Drawable.TextureId ?? 0;
+        return _renderLayerRenderTargets
+            .Single(x => x.Layer == layerNum);
     }
 
     private IDrawableComponent? GetDrawableComponent(Entity entity)

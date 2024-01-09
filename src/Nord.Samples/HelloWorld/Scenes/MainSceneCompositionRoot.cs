@@ -14,9 +14,10 @@ public class MainSceneCompositionRoot : ISceneCompositionRoot<MainScene>
     {
         container
             .AddCore()
+            .AddRenderLayer(27)
+            .AddRendering()
             .AddInput()
-            .AddEntityContext()
-            .AddRendering();
+            .AddEntityContext();
         
         // input
         container.RegisterSingleton<IInputActionMap, DefaultInputActionMap>();

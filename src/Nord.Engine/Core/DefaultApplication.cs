@@ -1,4 +1,3 @@
-using Nord.Engine.Core.Bus;
 using Nord.Engine.Core.Configuration;
 using Nord.Engine.Core.Extensions;
 using Nord.Engine.Core.Rendering;
@@ -13,24 +12,23 @@ public class DefaultApplication : IApplication
     private readonly EngineOptions _options;
     private readonly Time _time;
     private readonly RenderWindow _window;
-    private readonly IMainRenderTarget _mainRenderTarget;
     private readonly ISceneService _sceneService;
+    private readonly IMainRenderTarget _mainRenderTarget;
     private readonly IEnumerable<IGlobalProcess> _processes;
 
     public DefaultApplication(
         EngineOptions options,
-        RenderWindow window,
-        IMainRenderTarget mainRenderTarget,
         Time time,
-        IGlobalBus bus,
+        RenderWindow window,
         ISceneService sceneService,
+        IMainRenderTarget mainRenderTarget,
         IEnumerable<IGlobalProcess> processes)
     {
         _options = options;
-        _window = window;
-        _mainRenderTarget = mainRenderTarget;
         _time = time;
+        _window = window;
         _sceneService = sceneService;
+        _mainRenderTarget = mainRenderTarget;
         _processes = processes;
     }
     
@@ -49,7 +47,7 @@ public class DefaultApplication : IApplication
             _window.DispatchEvents();
             // window.Clear(new Color(46, 52, 64));
             
-            _mainRenderTarget.RenderTexture!.Clear(new Color(46, 52, 64));
+            _mainRenderTarget.RenderTexture!.Clear(Colors.Clear);
             
             _processes.ForEach(x => x.Update(_time));
             _sceneService.CurrentScene?.Update(_time);
