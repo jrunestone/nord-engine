@@ -55,7 +55,7 @@ public class DefaultUiRenderSystem : SystemBase
             _isLoaded = true;
             _view!.Focus();
         };
-        _view.HTML = "<html><head><style type='text/css'>*,html,body{margin:0;padding:0;width:auto;height:auto;font-family:'Ubuntu Regular'}input{padding:5px;}</style></head><body><input type='text'/></body></html>";
+        _view.HTML = "<html><head><style type='text/css'>*,html,body{margin:0;padding:0;width:auto;height:auto;font-family:'Ubuntu Regular'}input{padding:5px;}</style></head><body><input id='foobar' type='text'/></body></html>";
     }
 
     public override void Update(Time time)
@@ -86,6 +86,7 @@ public class DefaultUiRenderSystem : SystemBase
             if (Mouse.IsButtonPressed(Mouse.Button.Left))
             {
                 _view!.FireMouseEvent(new ULMouseEvent(){Button = ULMouseEventButton.Left, Type = ULMouseEventType.MouseDown, X = 1, Y = 1});
+                _view.EvaluateScript("document.getElementById('foobar').value='foobar';", out _);
             }
 
             _renderTarget.RenderTexture?.Draw(ui.Sprite);
