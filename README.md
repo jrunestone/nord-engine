@@ -21,9 +21,9 @@
 * Can request a global container, global bus
 
 # Rendering
-* All SpriteComponent are rendered to the main render target (render texture) and then to the window
+* All DrawableComponent are rendered to the main render target (render texture) and then to the window
 * Rendering is sorted by by RenderLayerComponent(number) and then by texture
-* Custom RenderTargetComponent(id) can be used (render to this, then to the main render target and/or then to the window)
+* All render layers have their own render target texture
 * The rendering targets use the global camera when rendering to the window
 * A custom CameraComponent can be used to render a custom view before rendering to the main rendering target and window
 
@@ -65,10 +65,7 @@
 * Shaders
 
 Entity
-  UiComponent(string html/string filename)
-  RenderTargetComponent(Targets.UI)
-  RenderLayerComponent(Layers.UI)
-  CameraComponent()
-Events/commands
+  TextBoxComponent : UiComponent(pos, etc)
+  ButtonComponent : UiComponent
 UiSystem
-  Render to ui render texture with ui view
+  
